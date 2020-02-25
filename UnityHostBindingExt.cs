@@ -14,7 +14,7 @@ public static class UnityHostBindingExt
                     var bindingAttr = Attribute.GetCustomAttribute(t,
                         typeof(HostBindingAttribute));
                     if (bindingAttr is HostBindingAttribute binding)
-                        return binding.ServiceType == typeof(TService);
+                        return binding.ServiceType.IsAssignableFrom(typeof(TService));
                     
                     return false;
                 }
