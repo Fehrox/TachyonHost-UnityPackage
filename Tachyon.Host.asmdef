@@ -1,5 +1,5 @@
 {
-    "name": "NewAssembly",
+    "name": "Tachyon.Host",
     "references": [
         "Tachyon.Common"
     ],
