@@ -22,7 +22,7 @@ public static class UnityHostBindingExt
         
         var bindMethod = serviceType.GetMethod("Bind");
         var binderInstance = Activator.CreateInstance(serviceType);
-        bindMethod?.Invoke(binderInstance, new object[] {host, serviceToBind, host._endPoints});
+        bindMethod?.Invoke(binderInstance, new object[] {host, serviceToBind, host.EndPoints});
         
     }
 }

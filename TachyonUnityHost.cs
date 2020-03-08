@@ -7,6 +7,7 @@ using TachyonServerRPC;
 using UnityEngine;
 
 namespace TachyonServerCore {
+    [RequireComponent(typeof(MainThreadReplyProcessor))]
     public class TachyonUnityHost : MonoBehaviour {
 
         public event Action<ClientConnection> OnClientConnected;
@@ -23,7 +24,8 @@ namespace TachyonServerCore {
             params TService[] services
         ) where TService : class {
             var endPointMap = new EndPointMap(serializer);
-            _host = new HostCore(endPointMap);
+            var replyProcessor = GetComponent<MainThreadReplyProcessor>();
+            _host = new HostCore(endPointMap, replyProcessor);
             _host.OnConnected += (c) => _connections.Enqueue(c);
             _host.OnDisconnected += (c) => _disconnections.Enqueue(c);
             _host.OnStarted += () => Started = true;
@@ -34,7 +36,7 @@ namespace TachyonServerCore {
             _host.Start();
         }
 
-        // Syncronise threaded events with unity main thread.
+        // Synchronise threaded events with unity main thread.
         IEnumerator Start() {
             while (true) {
                 
@@ -51,6 +53,6 @@ namespace TachyonServerCore {
                 yield return null;
             }
         }
-        
+
     }
 }
